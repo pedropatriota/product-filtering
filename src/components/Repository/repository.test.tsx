@@ -18,10 +18,11 @@ describe("Repository", () => {
   const handleFavorite = jest.fn();
   const favoriteList = [{ ...repo }];
   const favoriteIds = { "1": 1 };
+  const deleteFavorite = jest.fn();
 
   const CustomProvider = ({ children }: TContextProp) => (
     <ContextFavorite.Provider
-      value={{ handleFavorite, favoriteList, favoriteIds }}
+      value={{ handleFavorite, favoriteList, favoriteIds, deleteFavorite }}
     >
       {children}
     </ContextFavorite.Provider>
