@@ -1,7 +1,7 @@
-# rick-morty-characters
+# GitHub - Search repositories
 
 **URL**
-https://elaborate-truffle-c95810.netlify.app
+https://api.github.com/graphql
 
 ****
 **Scripts:**
@@ -14,7 +14,13 @@ https://elaborate-truffle-c95810.netlify.app
 - styled-components
 
 ****
-**Test** (nice-to-have)
+
+**Fetch request**
+- @apollo/client
+
+****
+
+**Test**
 - Jest
 - Testing-library
 
