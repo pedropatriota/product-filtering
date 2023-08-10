@@ -1,0 +1,33 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`SearchBar should match snapshot 1`] = `
+<div>
+  <img
+    alt="logo GitHub"
+    class="sc-imWYAI ewKPJB"
+    src="test-file-stub"
+  />
+  <div
+    class="sc-fqkvVR hlFEFn"
+    data-testid="search-container"
+  >
+    <div
+      class="sc-dcJsrY MyhEQ"
+    >
+      <input
+        class="sc-iGgWBj bAOAVV"
+        placeholder="Make your search..."
+        value="Example"
+      />
+      <span
+        class="sc-gsFSXq dBTFVK"
+      >
+        ✖
+      </span>
+    </div>
+    <ul
+      class="sc-kAyceB cXmXts"
+    />
+  </div>
+</div>
+`;

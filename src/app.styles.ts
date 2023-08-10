@@ -7,11 +7,5 @@ export const Container = styled.div`
   align-items: center;
   justify-content: flex-start;
   height: 100vh;
-  padding: 0.5rem min(5vw, 5rem);
-`;
-
-export const LogoImg = styled.img`
-  width: 100%;
-  max-width: 25rem;
-  height: auto;
+  padding: 1rem min(5vw, 5rem);
 `;

@@ -30,6 +30,7 @@ export const Input = styled.input`
   background-color: transparent;
   font-size: 1.2rem;
   font-weight: 500;
+  cursor: pointer;
 
   &:focus {
     outline: none;
@@ -48,5 +49,12 @@ export const CloseIcon = styled.span`
 
 export const DropdownContainer = styled.ul`
   overflow-y: auto;
-  padding-left: 1rem;
+  padding: 0 1rem;
+`;
+
+export const LogoImg = styled.img`
+  width: 100%;
+  max-width: 25rem;
+  height: auto;
+  margin: 5rem 0;
 `;

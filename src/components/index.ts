@@ -1,4 +1,3 @@
-import SearchBar from "./SearchBar";
-import Character from "./Charater";
+import Repository from "./Repository";
 
-export { SearchBar, Character };
+export { Repository };
