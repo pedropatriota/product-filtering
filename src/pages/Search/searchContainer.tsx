@@ -2,7 +2,7 @@ import { useState, useEffect, useCallback, useRef } from "react";
 import { useQuery } from "@apollo/client";
 import SearchBar from "./searchBar";
 import { SEARCH_REPOSITORIES } from "../../service/query";
-import type { Edge, IRepoProps } from "../../service/contracts";
+import type { Edge } from "../../service/contracts";
 import { useDebounce } from "../../hooks";
 
 const SearchContainer = () => {
@@ -20,15 +20,9 @@ const SearchContainer = () => {
     },
     skip: !debouncedValue,
     fetchPolicy: "cache-and-network",
-    // onCompleted: (result) => {
-    //   const newData = result.search.edges.map((edge: Edge) => edge.node);
-    //   setItems([...items, ...newData]);
-    //   // setCursor(result.search.pageInfo.endCursor);
-    //   setHasMore(result.search.pageInfo.hasNextPage);
-    // },
   });
 
-  const handleScroll = () => {
+  const handleScroll = useCallback(() => {
     if (
       containerRef.current &&
       containerRef.current.scrollTop + containerRef.current.clientHeight >=
@@ -45,16 +39,20 @@ const SearchContainer = () => {
               ...previousQueryResult.search.edges,
               ...fetchMoreResult.search.edges,
             ];
+            return fetchMoreResult;
           },
         });
     }
-  };
+  }, [
+    containerRef.current,
+    data?.search.pageInfo.endCursor,
+    data?.search.pageInfo.hasNextPage,
+  ]);
 
   useEffect(() => {
     if (containerRef.current) {
       containerRef.current.addEventListener("scroll", handleScroll);
     }
-
     return () => {
       if (containerRef.current) {
         containerRef.current.removeEventListener("scroll", handleScroll);
@@ -84,6 +82,12 @@ const SearchContainer = () => {
 
   if (error) return `Error: ${error?.message}`;
 
+  const filteredResult = data?.search?.edges
+    .map((edge: Edge) => edge.node)
+    .filter(({ name }: { name: string }) =>
+      name.toLowerCase().includes(searchTerm.toLowerCase())
+    );
+
   return (
     <SearchBar
       ref={containerRef}
@@ -91,7 +95,7 @@ const SearchContainer = () => {
       loading={loading}
       inputValue={searchTerm}
       clearInputValue={clearInputValue}
-      result={data?.search?.edges.map((edge: Edge) => edge.node)}
+      result={filteredResult}
       expandSearchBox={expandSearchBox}
       handleChangeInputValue={handleChangeInputValue}
     />

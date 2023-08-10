@@ -3,6 +3,7 @@ import { Trash2 } from "lucide-react";
 
 export const Container = styled.div`
   width: 100%;
+  padding-bottom: 2.5rem;
 `;
 
 export const ULFavoriteContainer = styled.ul`
@@ -14,6 +15,7 @@ export const ULFavoriteContainer = styled.ul`
 
 export const RepoContainer = styled.li`
   width: 100%;
+  max-width: 20rem;
   border: 1px solid #ccc;
   border-radius: 0.5rem;
 `;
