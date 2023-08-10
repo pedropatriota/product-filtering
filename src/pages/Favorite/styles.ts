@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import { Trash2 } from "lucide-react";
 
 export const Container = styled.div`
   width: 100%;
@@ -25,4 +26,22 @@ export const InfoContainer = styled.div`
 export const Avatar = styled.img`
   width: 100%;
   height: auto;
+`;
+
+export const TrashIcon = styled(Trash2)`
+  cursor: pointer;
+  color: red;
+`;
+
+export const RatedContainer = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  p {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.5rem;
+  }
 `;

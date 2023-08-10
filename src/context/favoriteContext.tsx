@@ -13,13 +13,15 @@ export interface FavoriteProps {
   favoriteIds: Ids;
   favoriteList: ListProps[];
   handleFavorite: (id: string, repo: ListProps) => void;
+  deleteFavorite: (id: string) => void;
 }
 export type TContextProp = { children: ReactNode };
 
 export const ContextFavorite = createContext<FavoriteProps>({
   favoriteIds: {},
   favoriteList: [],
-  handleFavorite: (id, repo) => {},
+  handleFavorite: () => {},
+  deleteFavorite: () => {},
 });
 
 const contextFavoriteProvider = ({ children }: TContextProp) => {
@@ -62,10 +64,21 @@ const contextFavoriteProvider = ({ children }: TContextProp) => {
     updateFavoriteIds(hash);
   };
 
+  const deleteFavorite = (id: string) => {
+    const newFavoriteList = favoriteList.filter(
+      (favorite) => favorite.id !== id
+    );
+    const newFavoriteIds = { ...favoriteIds };
+    delete newFavoriteIds[id];
+    setFavoriteIds(newFavoriteIds);
+    setFavoriteList(newFavoriteList);
+  };
+
   const value = {
     favoriteIds,
     favoriteList,
     handleFavorite,
+    deleteFavorite,
   };
 
   return (

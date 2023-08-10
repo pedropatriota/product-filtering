@@ -1,11 +1,13 @@
 import React from "react";
 import { useContext } from "react";
+import { Star } from "lucide-react";
 import { ContextFavorite } from "../../context/favoriteContext";
 
 import * as Styled from "./styles";
 
 const Favorite = () => {
-  const { favoriteList, favoriteIds } = useContext(ContextFavorite);
+  const { favoriteList, favoriteIds, deleteFavorite } =
+    useContext(ContextFavorite);
 
   const createDataToFavoriteRepositories = () => {
     const newFavoriteList = favoriteList.map(({ ...params }) => {
@@ -40,7 +42,13 @@ const Favorite = () => {
                 <a href={url} target="_blank">
                   <strong>URL:</strong> Open URL
                 </a>
-                <p>{`Favorite rate: ${favoriteRate}`}</p>
+                <Styled.RatedContainer>
+                  <p>
+                    <strong>Favorite rate:</strong> {favoriteRate}{" "}
+                    <Star fill="#d6d630" stroke="#d6d630" />
+                  </p>
+                  <Styled.TrashIcon onClick={() => deleteFavorite(id)} />
+                </Styled.RatedContainer>
               </Styled.InfoContainer>
             </Styled.RepoContainer>
           )
