@@ -9,16 +9,15 @@ const SearchContainer = () => {
   const [expand, setExpand] = useState(false);
   const [searchTerm, setSearchTerm] = useState("");
 
-  const debouncedValue = useDebounce(searchTerm, 1000);
+  const debouncedValue = useDebounce(searchTerm, 300);
 
   const containerRef = useRef<HTMLUListElement | null>(null);
 
   const { loading, error, fetchMore, data } = useQuery(SEARCH_REPOSITORIES, {
     variables: {
-      searchTerm: debouncedValue,
+      searchTerm: debouncedValue ? debouncedValue : "is:public",
       cursor: null,
     },
-    skip: !debouncedValue,
     fetchPolicy: "cache-and-network",
   });
 

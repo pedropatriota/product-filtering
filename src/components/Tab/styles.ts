@@ -23,8 +23,7 @@ export const LinkLabel = styled(Link)<TSelected>`
     selected &&
     css`
       color: #1f26a3;
-      font-weight: 800;
-      &:hover {
+      w &:hover {
         color: #1f26a3;
       }
     `}

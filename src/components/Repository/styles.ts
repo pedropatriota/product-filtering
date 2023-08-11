@@ -1,4 +1,4 @@
-import styled from "styled-components";
+import styled, { keyframes } from "styled-components";
 
 export const LisContainer = styled.li`
   margin: 1rem 0;
@@ -17,7 +17,7 @@ export const Button = styled.button`
   white-space: nowrap;
   background-color: #ccc;
   &:focus {
-    outline: none;
+    outline-color: blue;
   }
   &:hover {
     background-color: #cdc8e2;
