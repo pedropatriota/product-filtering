@@ -16,7 +16,7 @@ https://api.github.com/graphql
 ****
 
 **Fetch request**
-- @apollo/client
+- JSON Server
 
 ****
 
