@@ -1,4 +1,3 @@
-import Repository from "./Repository";
-import FavoriteRepository from "./FavoriteRepository";
+// import
 
-export { Repository, FavoriteRepository };
+export {};
