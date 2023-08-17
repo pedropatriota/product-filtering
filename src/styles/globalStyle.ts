@@ -9,6 +9,7 @@ export default createGlobalStyle`
 
 #root {
   width: 100%;
+}
   
 
 body{
@@ -23,10 +24,16 @@ body{
 
   @media(max-width: 768px){
     font-size: 14px;
+    th,td{
+      font-size:14px
+    }
   }
 
   @media(max-width: 400px){
     font-size: 12px;
+    th,td{
+      font-size:12px;
+    }
   }
-}
+
 `;

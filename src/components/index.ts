@@ -1,3 +1,3 @@
-// import
+import Filter from "./Filter";
 
-export {};
+export { Filter };

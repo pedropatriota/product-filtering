@@ -1,5 +1,4 @@
-import { BrowserRouter as Router } from "react-router-dom";
-
+import Router from "./router";
 import GlobalStyle from "./styles/globalStyle";
 import HomeContextProvider from "./context/homeContext";
 import * as Styled from "./app.styles";
@@ -9,8 +8,8 @@ function App() {
     <Styled.Container>
       <HomeContextProvider>
         <Router />
+        <GlobalStyle />
       </HomeContextProvider>
-      <GlobalStyle />
     </Styled.Container>
   );
 }

@@ -1,11 +1,7 @@
-import { BrowserRouter, Routes, Route, useLocation } from "react-router-dom";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { Home } from "../pages";
 
-interface RouterProps {
-  pathname: string;
-}
-
-const Router = ({ pathname }: RouterProps) => {
+const Router = () => {
   return (
     <BrowserRouter>
       <Routes>
