@@ -7,7 +7,7 @@ export const ReactSelect = styled(Select)`
     background-color: #fff;
     border-color: #ccc;
     box-shadow: 0 0 0 transparent;
-    height: 3.375rem;
+    min-height: 2.4rem;
   }
 
   .react-select__single-value {
@@ -18,6 +18,10 @@ export const ReactSelect = styled(Select)`
     width: 12.5rem;
     background-color: #fff;
     color: #000;
+  }
+
+  .react-select__control--is-disabled {
+    background-color: #eeeded;
   }
 
   .react-select__dropdown-indicator,

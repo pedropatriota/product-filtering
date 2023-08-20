@@ -17,7 +17,8 @@ export type TPropertiesProps =
       id: number;
       name: string;
       type: string;
-    }
+      values: string[];
+    }[]
   | {
       id: number;
       name: string;

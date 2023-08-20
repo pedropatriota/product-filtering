@@ -1,6 +1,7 @@
-import { ActionMeta, GroupBase, SingleValue } from "react-select";
+import { ActionMeta, GroupBase } from "react-select";
+import type { TSelect } from "../../context/contracts";
 
-export type TFilter = SingleValue<
+export type TFilter =
   | {
       label: string;
       value: number | string | null;
@@ -8,8 +9,7 @@ export type TFilter = SingleValue<
   | {
       label: string;
       value: number | string | null;
-    }[]
->;
+    }[];
 
 export type TFilterFN = (
   newValue: TFilter | unknown,
@@ -17,7 +17,7 @@ export type TFilterFN = (
 ) => void;
 
 export interface IFilterProps {
-  filter: TFilter[];
+  filter: TSelect;
   options: readonly (
     | TFilter
     | GroupBase<{ label: string; value: string | number | null }>

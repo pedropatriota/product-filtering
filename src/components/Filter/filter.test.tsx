@@ -1,7 +1,6 @@
 import { render, screen, fireEvent } from "@testing-library/react";
 import Filter from ".";
 import type {} from "./contracts";
-import { ThemeProvider } from "styled-components";
 
 describe("Filter", () => {
   const props = {

@@ -1,9 +1,12 @@
-import { ActionMeta, GroupBase, SingleValue } from "react-select";
+import { ActionMeta, GroupBase, SingleValue, MultiValue } from "react-select";
 
-type Filter = SingleValue<
-  | { label: string; value: string | number | null }
+type Filter =
+  | {
+      label: string;
+      value: string | number | null;
+    }
   | { label: string; value: string | number | null }[]
->;
+  | null;
 
 export interface IDropdownProps {
   options: readonly (
@@ -17,4 +20,5 @@ export interface IDropdownProps {
     actionMeta: ActionMeta<Filter | unknown>
   ) => void;
   isMulti?: boolean;
+  isDisabled?: boolean;
 }

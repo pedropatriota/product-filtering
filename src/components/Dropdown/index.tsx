@@ -7,19 +7,28 @@ const Dropdown = ({
   filter,
   label,
   isMulti,
+  isDisabled,
 }: IDropdownProps) => {
+  const createLabel = () => {
+    if (label === "values") {
+      return `Select one or more ${label}`;
+    }
+    return `Select a ${label}`;
+  };
+
   return (
     <div>
-      <label htmlFor="react-select-2-input">{`Select a ${label}:`}</label>
+      <label htmlFor="react-select-2-input">{createLabel()}</label>
       <ReactSelect
-        aria-label={`Select a ${label}:`}
+        aria-label={createLabel()}
         classNamePrefix="react-select"
         options={options}
         value={filter}
         onChange={handleFilter}
         autoFocus={false}
-        isClearable
+        isClearable={!!filter}
         isMulti={isMulti}
+        isDisabled={isDisabled}
       />
     </div>
   );

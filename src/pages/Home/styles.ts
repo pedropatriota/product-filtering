@@ -1,15 +1,18 @@
 import styled from "styled-components";
 
 export const Container = styled.div`
-  width: 100%;
+  width: 50rem;
   display: flex;
   flex-direction: column;
   align-items: center;
+  margin-top: 4rem;
 `;
 
 export const TableContainer = styled.div`
   width: 50rem;
   border-radius: 8px;
+  max-height: 22rem;
+  overflow: auto;
 `;
 
 export const Table = styled.table`
