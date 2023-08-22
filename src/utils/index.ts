@@ -1,3 +1,4 @@
 import getUniqueOrderedValues from "./getUniqueOrderedValues";
+import getMethodsByOperators from "./getMethodsByOperators";
 
-export { getUniqueOrderedValues };
+export { getUniqueOrderedValues, getMethodsByOperators };

@@ -38,6 +38,7 @@
     "src",
     "jest.setup.ts",
     "vite.config.ts",
-    "data"
+    "src/data",
+    "src/data"
   ]
 }

@@ -1,7 +1,6 @@
 import {
   FC,
   PropsWithChildren,
-  ReactNode,
   createContext,
   useCallback,
   useEffect,
@@ -9,7 +8,7 @@ import {
   useState,
 } from "react";
 
-import { getUniqueOrderedValues } from "../utils";
+import { getUniqueOrderedValues, getMethodsByOperators } from "../utils";
 import { operatorsByProperties } from "../constants";
 
 import datastore from "../data/dataStore";
@@ -26,16 +25,21 @@ export const HomeContext = createContext<IHomeContextProps>({
     operator: { label: "", value: null },
     values: [{ label: "", value: null }],
   },
-  filters: { property: "", operator: "", values: [""] || "" },
+  filters: { property: 0, operator: "", values: [""] || "" },
   handleSelectProperty: () => () => {},
   handleSelectOperator: () => () => {},
   handleSelectValues: () => () => {},
   valuesSelectFilter: () => [],
+  applyFilters: () => {},
+  clearFilters: () => {},
 });
 
 const HomeContextProvider: FC<PropsWithChildren> = ({ children }) => {
+  /*
+   * States:
+   */
   const [filters, setFilters] = useState<TFilters>({
-    property: "",
+    property: 0,
     operator: "",
     values: [] && "",
   });
@@ -47,6 +51,13 @@ const HomeContextProvider: FC<PropsWithChildren> = ({ children }) => {
   });
 
   const [filteredTable, setFilteredTable] = useState<TProductsProps>([]);
+
+  /*
+   * Functions from datastore:
+   */
+  const products = useMemo(() => {
+    return datastore.getProducts();
+  }, [filters]);
 
   const properties = useMemo(
     () =>
@@ -78,72 +89,38 @@ const HomeContextProvider: FC<PropsWithChildren> = ({ children }) => {
     [select.property?.type]
   );
 
-  const products = useMemo(() => {
-    return datastore.getProducts();
-  }, [filters]);
-
-  const filteredProducts = useCallback(() => {
+  /*
+   * Function responsible for filtering the table:
+   */
+  const filteredProducts = () => {
     let filtered = datastore.getProducts();
     const operators = datastore.getOperators();
 
     const property = properties.find(
-      (prop) => prop.value === select.property?.value
+      ({ value }) => value === filters?.property
     );
-
-    const operator = operators.find((op) => op.id === select.operator?.value);
+    const operator = operators.find((op) => op.id === filters.operator);
 
     filtered = filtered.filter(({ property_values }) => {
-      const propertyValue = property_values.find((value) => {
-        return value.property_id === property?.value;
+      const propertyValue = property_values.find(({ property_id }) => {
+        return property_id === property?.value;
       })?.value;
 
-      if (propertyValue) {
-        switch (operator?.id) {
-          case "equals":
-            return propertyValue === (filters.values as string);
-          case "in": {
-            const valuesToMatch = (filters.values as string[]).map((val) =>
-              val.trim()
-            );
-            return valuesToMatch.includes(propertyValue as string);
-          }
-          case "contains": {
-            const valuesToMatch = (filters.values as string[]).map((val) =>
-              val.trim()
-            );
-            return (
-              propertyValue &&
-              valuesToMatch.some((val) =>
-                (propertyValue as string).includes(val)
-              )
-            );
-          }
-          case "greater_than":
-            return (
-              (propertyValue as number) > parseFloat(filters.values.toString())
-            );
-          case "less_than":
-            return (
-              (propertyValue as number) < parseFloat(filters.values.toString())
-            );
-          case "any":
-            return propertyValue !== null && propertyValue !== undefined;
-          case "none":
-            return propertyValue === null || propertyValue === undefined;
-          default:
-            return true;
-        }
-      }
+      return getMethodsByOperators({ filters, propertyValue, operator });
     });
 
     setFilteredTable(filtered);
-  }, [filters, select]);
+  };
 
-  useEffect(() => {
-    if (filters.values?.length || filters.values) {
-      filteredProducts();
-    }
-  }, [filters.values]);
+  const applyFilters = () => filteredProducts();
+  const clearFilters = () => {
+    setFilters({ property: 0, operator: "", values: [] });
+    setSelect({
+      property: { label: "", value: null, type: "" },
+      operator: { label: "", value: null },
+      values: [],
+    });
+  };
 
   const handleSelect = useCallback(
     (newValue: TSelect | any, propertyName: string) => {
@@ -154,13 +131,13 @@ const HomeContextProvider: FC<PropsWithChildren> = ({ children }) => {
           return {
             ...currentFilters,
             [propertyName]: newValue?.map(
-              ({ label }: { label: string }) => label
+              ({ value }: { value: string }) => value
             ),
           };
         } else {
           return {
             ...currentFilters,
-            [propertyName]: newValue?.label as string,
+            [propertyName]: newValue?.value,
           };
         }
       });
@@ -168,21 +145,31 @@ const HomeContextProvider: FC<PropsWithChildren> = ({ children }) => {
     [filters, select, setFilters, setSelect]
   );
 
-  const valuesSelectFilter = (
-    id: number | string | null
-  ): { label: string; value: string | number | null }[] => {
-    const options = products.map(({ property_values }) => {
-      property_values.filter(({ property_id }) => {
-        property_id === id;
+  const valuesSelectFilter = useCallback(
+    (
+      id: number | string | null
+    ): { label: string; value: string | number | null }[] => {
+      const options = products.map(({ property_values }) => {
+        property_values.filter(({ property_id }) => {
+          property_id === id;
+        });
+        return {
+          label: property_values[id as number]?.value,
+          value: property_values[id as number]?.value,
+        };
       });
-      return {
-        label: property_values[id as number]?.value,
-        value: property_values[id as number]?.value,
-      };
-    });
 
-    return getUniqueOrderedValues(options);
-  };
+      return getUniqueOrderedValues(options);
+    },
+    []
+  );
+
+  /*
+   * Effects to handle:
+   * - if user change the property, it clears the operator and property values
+   * - if user only change the operator, the property values is cleared
+   * - if there is no filter applied, the table renders the getProducts()
+   */
 
   useEffect(() => {
     setFilters({ ...filters, operator: "", values: [] });
@@ -190,7 +177,12 @@ const HomeContextProvider: FC<PropsWithChildren> = ({ children }) => {
   }, [filters.property]);
 
   useEffect(() => {
-    if (!filters.values?.length || !filters.values) {
+    setFilters({ ...filters, values: [] || "" });
+    setSelect({ ...select, values: [] || "" });
+  }, [filters.operator]);
+
+  useEffect(() => {
+    if (!(filters.values as string[] | number[])?.length || !filters.values) {
       setFilteredTable(products);
     }
   }, [filters.values]);
@@ -207,6 +199,8 @@ const HomeContextProvider: FC<PropsWithChildren> = ({ children }) => {
     handleSelectOperator: (value: TSelect | any) =>
       handleSelect(value, "operator"),
     handleSelectValues: (value: TSelect | any) => handleSelect(value, "values"),
+    applyFilters,
+    clearFilters,
   };
 
   return <HomeContext.Provider value={value}>{children}</HomeContext.Provider>;

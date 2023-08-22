@@ -1,9 +1,9 @@
 import { TProductsProps } from "../data/contracts";
 
 export type TFilters = {
-  property: string;
+  property: number;
   operator: string;
-  values: string[] | string;
+  values: string[] | number[] | string | number;
 };
 
 export type TSelect = {
@@ -39,4 +39,6 @@ export interface IHomeContextProps {
         label: string;
         value: string | number | null;
       }[];
+  applyFilters: () => void;
+  clearFilters: () => void;
 }

@@ -13,7 +13,7 @@ const Dropdown = ({
     if (label === "values") {
       return `Select one or more ${label}`;
     }
-    return `Select a ${label}`;
+    return `Select ${label}`;
   };
 
   return (

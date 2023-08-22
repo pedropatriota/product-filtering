@@ -6,10 +6,10 @@ exports[`Dropdown component should match the snapshot 1`] = `
     <label
       for="react-select-2-input"
     >
-      Select a gender:
+      Select a property
     </label>
     <div
-      class="sc-aXZVg bEtCNO css-b62m3t-container"
+      class="sc-bcPKhP bpHLtS css-b62m3t-container"
     >
       <span
         class="css-1f43avz-a11yText-A11yText"
@@ -38,7 +38,7 @@ exports[`Dropdown component should match the snapshot 1`] = `
               aria-autocomplete="list"
               aria-expanded="false"
               aria-haspopup="true"
-              aria-label="Select a gender:"
+              aria-label="Select a property"
               autocapitalize="none"
               autocomplete="off"
               autocorrect="off"

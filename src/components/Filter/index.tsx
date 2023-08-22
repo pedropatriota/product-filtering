@@ -3,7 +3,6 @@ import Dropdown from "../Dropdown";
 import { operatorsBySingleValue } from "../../constants";
 import type { IFilterProps } from "./contracts";
 import { Container } from "./styles";
-import Select from "react-select/dist/declarations/src/Select";
 
 const Filter = ({ handleFilter, filter, options, label }: IFilterProps) => {
   return (
