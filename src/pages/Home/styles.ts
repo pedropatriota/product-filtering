@@ -8,6 +8,11 @@ export const Container = styled.div`
   margin-top: 4rem;
 `;
 
+export const Title = styled.h2`
+  margin-bottom: 3rem;
+  text-transform: uppercase;
+`;
+
 export const TableContainer = styled.div`
   width: 50rem;
   border-radius: 8px;

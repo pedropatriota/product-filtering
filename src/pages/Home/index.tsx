@@ -8,6 +8,7 @@ const Home = () => {
 
   return (
     <Styled.Container>
+      <Styled.Title>Products Filtering App</Styled.Title>
       <FilterContainer />
       <Styled.TableContainer>
         <Styled.Table>
